@@ -38,7 +38,6 @@
 #include <SDL3/SDL_audio.h>
 #include <SDL3/SDL_bits.h>
 #include <SDL3/SDL_blendmode.h>
-#include <SDL3/SDL_camera.h>
 #include <SDL3/SDL_clipboard.h>
 #include <SDL3/SDL_cpuinfo.h>
 #include <SDL3/SDL_dialog.h>
@@ -62,7 +61,6 @@
 #include <SDL3/SDL_locale.h>
 #include <SDL3/SDL_log.h>
 #include <SDL3/SDL_messagebox.h>
-#include <SDL3/SDL_metal.h>
 #include <SDL3/SDL_misc.h>
 #include <SDL3/SDL_mouse.h>
 #include <SDL3/SDL_mutex.h>
@@ -82,7 +80,6 @@
 #include <SDL3/SDL_thread.h>
 #include <SDL3/SDL_time.h>
 #include <SDL3/SDL_timer.h>
-#include <SDL3/SDL_tray.h>
 #include <SDL3/SDL_touch.h>
 #include <SDL3/SDL_version.h>
 #include <SDL3/SDL_video.h>

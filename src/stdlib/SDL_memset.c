@@ -24,9 +24,6 @@
 #ifdef SDL_memset
 #undef SDL_memset
 #endif
-#if SDL_DYNAMIC_API
-#define SDL_memset SDL_memset_REAL
-#endif
 void *SDL_memset(SDL_OUT_BYTECAP(len) void *dst, int c, size_t len)
 {
 #if defined(__GNUC__) && (defined(HAVE_LIBC) && HAVE_LIBC)

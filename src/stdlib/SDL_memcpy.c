@@ -24,9 +24,6 @@
 #ifdef SDL_memcpy
 #undef SDL_memcpy
 #endif
-#if SDL_DYNAMIC_API
-#define SDL_memcpy SDL_memcpy_REAL
-#endif
 void *SDL_memcpy(SDL_OUT_BYTECAP(len) void *dst, SDL_IN_BYTECAP(len) const void *src, size_t len)
 {
 #if defined(__GNUC__) && (defined(HAVE_LIBC) && HAVE_LIBC)

@@ -27,31 +27,17 @@
 /**
  *  \file SDL_build_config.h
  *
- *  This is a set of defines to configure the SDL features
+ *  Per-platform feature defines. Supported targets: Windows, Linux, Emscripten.
  */
 
-/* Add any platform that doesn't build using the configure system. */
-#if defined(SDL_PLATFORM_PRIVATE)
-#include "SDL_build_config_private.h"
-#elif defined(SDL_PLATFORM_WIN32)
+#if defined(SDL_PLATFORM_WIN32)
 #include "SDL_build_config_windows.h"
-#elif defined(SDL_PLATFORM_WINGDK)
-#include "SDL_build_config_wingdk.h"
-#elif defined(SDL_PLATFORM_XBOXONE) || defined(SDL_PLATFORM_XBOXSERIES)
-#include "SDL_build_config_xbox.h"
-#elif defined(SDL_PLATFORM_MACOS)
-#include "SDL_build_config_macos.h"
-#elif defined(SDL_PLATFORM_IOS)
-#include "SDL_build_config_ios.h"
-#elif defined(SDL_PLATFORM_ANDROID)
-#include "SDL_build_config_android.h"
+#elif defined(SDL_PLATFORM_LINUX)
+#include "SDL_build_config_linux.h"
+#elif defined(SDL_PLATFORM_EMSCRIPTEN)
+#include "SDL_build_config_emscripten.h"
 #else
-/* This is a minimal configuration just to get SDL running on new platforms. */
-#include "SDL_build_config_minimal.h"
-#endif /* platform config */
-
-#ifdef USING_GENERATED_CONFIG_H
-#error Wrong SDL_build_config.h, check your include path?
+#error "Unsupported platform for Barely-Soldered/SDL fork (Windows, Linux, Emscripten only)"
 #endif
 
 #endif /* SDL_build_config_h_ */

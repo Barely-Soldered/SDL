@@ -54,7 +54,6 @@
 
 #include <SDL3/SDL_stdinc.h>
 #include <SDL3/SDL_audio.h>
-#include <SDL3/SDL_camera.h>
 #include <SDL3/SDL_error.h>
 #include <SDL3/SDL_gamepad.h>
 #include <SDL3/SDL_joystick.h>
@@ -252,12 +251,6 @@ typedef enum SDL_EventType
     SDL_EVENT_PEN_BUTTON_UP,              /**< Pressure-sensitive pen button released */
     SDL_EVENT_PEN_MOTION,                 /**< Pressure-sensitive pen is moving on the tablet */
     SDL_EVENT_PEN_AXIS,                   /**< Pressure-sensitive pen angle/pressure/etc changed */
-
-    /* Camera hotplug events */
-    SDL_EVENT_CAMERA_DEVICE_ADDED = 0x1400,  /**< A new camera device is available */
-    SDL_EVENT_CAMERA_DEVICE_REMOVED,         /**< A camera device has been removed. */
-    SDL_EVENT_CAMERA_DEVICE_APPROVED,        /**< A camera device has been approved for use by the user. */
-    SDL_EVENT_CAMERA_DEVICE_DENIED,          /**< A camera device has been denied for use by the user. */
 
     /* Render events */
     SDL_EVENT_RENDER_TARGETS_RESET = 0x2000, /**< The render targets have been reset and their contents need to be updated */
@@ -731,19 +724,6 @@ typedef struct SDL_AudioDeviceEvent
     Uint8 padding3;
 } SDL_AudioDeviceEvent;
 
-/**
- * Camera device event structure (event.cdevice.*)
- *
- * \since This struct is available since SDL 3.2.0.
- */
-typedef struct SDL_CameraDeviceEvent
-{
-    SDL_EventType type; /**< SDL_EVENT_CAMERA_DEVICE_ADDED, SDL_EVENT_CAMERA_DEVICE_REMOVED, SDL_EVENT_CAMERA_DEVICE_APPROVED, SDL_EVENT_CAMERA_DEVICE_DENIED */
-    Uint32 reserved;
-    Uint64 timestamp;   /**< In nanoseconds, populated using SDL_GetTicksNS() */
-    SDL_CameraID which;       /**< SDL_CameraID for the device being added or removed or changing */
-} SDL_CameraDeviceEvent;
-
 
 /**
  * Renderer event structure (event.render.*)
@@ -1040,7 +1020,6 @@ typedef union SDL_Event
     SDL_GamepadTouchpadEvent gtouchpad;     /**< Gamepad touchpad event data */
     SDL_GamepadSensorEvent gsensor;         /**< Gamepad sensor event data */
     SDL_AudioDeviceEvent adevice;           /**< Audio device event data */
-    SDL_CameraDeviceEvent cdevice;          /**< Camera device event data */
     SDL_SensorEvent sensor;                 /**< Sensor event data */
     SDL_QuitEvent quit;                     /**< Quit request event data */
     SDL_UserEvent user;                     /**< Custom event data */

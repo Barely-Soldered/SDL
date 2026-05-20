@@ -345,14 +345,6 @@ struct SDL_VideoDevice
 
     /* * * */
     /*
-     * Metal support
-     */
-    SDL_MetalView (*Metal_CreateView)(SDL_VideoDevice *_this, SDL_Window *window);
-    void (*Metal_DestroyView)(SDL_VideoDevice *_this, SDL_MetalView view);
-    void *(*Metal_GetLayer)(SDL_VideoDevice *_this, SDL_MetalView view);
-
-    /* * * */
-    /*
      * Event manager functions
      */
     int (*WaitEventTimeout)(SDL_VideoDevice *_this, Sint64 timeoutNS);

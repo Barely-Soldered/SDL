@@ -255,7 +255,6 @@ static bool SDLCALL LogOneLeakedObject(void *userdata, const SDL_HashTable *tabl
         SDLOBJTYPECASE(HIDAPI_DEVICE, "hidapi device");
         SDLOBJTYPECASE(HIDAPI_JOYSTICK, "hidapi joystick");
         SDLOBJTYPECASE(THREAD, "thread");
-        SDLOBJTYPECASE(TRAY, "SDL_Tray");
         #undef SDLOBJTYPECASE
         default: break;
     }

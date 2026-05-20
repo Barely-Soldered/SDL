@@ -115,6 +115,12 @@ typedef unsigned int uintptr_t;
 #define HAVE_STDARG_H 1
 #define HAVE_STDDEF_H 1
 
+/* Use SDL's bundled GLES2/EGL/khronos headers rather than expecting system
+ * GLES2/EGL development packages to be present in the toolchain include path.
+ * MSVC already does this implicitly via _MSC_VER gating; this define extends
+ * the same behavior to MinGW + clang Windows builds. */
+#define SDL_USE_BUILTIN_OPENGL_DEFINITIONS 1
+
 /* This can be disabled to avoid C runtime dependencies and manifest requirements */
 #ifndef HAVE_LIBC
 #define HAVE_LIBC 1
@@ -219,8 +225,6 @@ typedef unsigned int uintptr_t;
 #if defined(HAVE_MMDEVICEAPI_H) && defined(HAVE_AUDIOCLIENT_H)
 #define SDL_AUDIO_DRIVER_WASAPI 1
 #endif
-#define SDL_AUDIO_DRIVER_DSOUND 1
-#define SDL_AUDIO_DRIVER_DISK 1
 #define SDL_AUDIO_DRIVER_DUMMY 1
 
 /* Enable various input drivers */
@@ -263,9 +267,7 @@ typedef unsigned int uintptr_t;
 
 /* Enable various video drivers */
 #define SDL_VIDEO_DRIVER_DUMMY 1
-#define SDL_VIDEO_DRIVER_OFFSCREEN 1
 #define SDL_VIDEO_DRIVER_WINDOWS 1
-#define SDL_VIDEO_RENDER_D3D 1
 #ifdef HAVE_D3D11_H
 #define SDL_VIDEO_RENDER_D3D11 1
 #endif
@@ -284,9 +286,6 @@ typedef unsigned int uintptr_t;
 #define SDL_VIDEO_RENDER_VULKAN 1
 
 /* Enable GPU support */
-#ifdef HAVE_D3D11_H
-#define SDL_GPU_D3D11 1
-#endif
 #define SDL_GPU_D3D12 1
 #define SDL_GPU_VULKAN 1
 #define SDL_VIDEO_RENDER_GPU 1
@@ -298,8 +297,7 @@ typedef unsigned int uintptr_t;
 #define SDL_FILESYSTEM_WINDOWS 1
 #define SDL_FSOPS_WINDOWS 1
 
-/* Enable the camera driver */
-#define SDL_CAMERA_DRIVER_MEDIAFOUNDATION 1
-#define SDL_CAMERA_DRIVER_DUMMY 1
+/* Camera subsystem cut at fork carve */
+#define SDL_CAMERA_DISABLED 1
 
 #endif /* SDL_build_config_windows_h_ */

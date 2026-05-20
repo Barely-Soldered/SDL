@@ -34,7 +34,6 @@
 #include "../SDL_hints_c.h"
 #include "../SDL_properties_c.h"
 #include "../timer/SDL_timer_c.h"
-#include "../camera/SDL_camera_c.h"
 #include "../render/SDL_sysrender.h"
 #include "../main/SDL_main_callbacks.h"
 
@@ -2520,13 +2519,6 @@ SDL_Window *SDL_CreateWindowWithProperties(SDL_PropertiesID props)
         }
     }
 
-    if (flags & SDL_WINDOW_METAL) {
-        if (!_this->Metal_CreateView) {
-            SDL_ContextNotSupported("Metal");
-            return NULL;
-        }
-    }
-
     window = (SDL_Window *)SDL_calloc(1, sizeof(*window));
     if (!window) {
         return NULL;
@@ -2679,9 +2671,6 @@ static bool SDL_ReconfigureWindowInternal(SDL_Window *window, SDL_WindowFlags fl
     if ((flags & SDL_WINDOW_VULKAN) && !_this->Vulkan_CreateSurface) {
         return SDL_ContextNotSupported("Vulkan");
     }
-    if ((flags & SDL_WINDOW_METAL) && !_this->Metal_CreateView) {
-        return SDL_ContextNotSupported("Metal");
-    }
 
     SDL_DestroyWindowSurface(window);
 
@@ -2735,9 +2724,6 @@ bool SDL_RecreateWindow(SDL_Window *window, SDL_WindowFlags flags)
     }
     if ((flags & SDL_WINDOW_VULKAN) && !_this->Vulkan_CreateSurface) {
         return SDL_ContextNotSupported("Vulkan");
-    }
-    if ((flags & SDL_WINDOW_METAL) && !_this->Metal_CreateView) {
-        return SDL_ContextNotSupported("Metal");
     }
 
     if (window->flags & SDL_WINDOW_EXTERNAL) {
@@ -6373,52 +6359,6 @@ bool SDL_Vulkan_GetPresentationSupport(VkInstance instance,
      * as it is always supported.
      */
     return true;
-}
-
-SDL_MetalView SDL_Metal_CreateView(SDL_Window *window)
-{
-    CHECK_WINDOW_MAGIC(window, NULL);
-
-    if (!_this->Metal_CreateView) {
-        SDL_Unsupported();
-        return NULL;
-    }
-
-    if (!(window->flags & SDL_WINDOW_METAL)) {
-        // No problem, we can convert to Metal
-        if (window->flags & SDL_WINDOW_OPENGL) {
-            window->flags &= ~SDL_WINDOW_OPENGL;
-            SDL_GL_UnloadLibrary();
-        }
-        if (window->flags & SDL_WINDOW_VULKAN) {
-            window->flags &= ~SDL_WINDOW_VULKAN;
-            SDL_Vulkan_UnloadLibrary();
-        }
-        window->flags |= SDL_WINDOW_METAL;
-    }
-
-    return _this->Metal_CreateView(_this, window);
-}
-
-void SDL_Metal_DestroyView(SDL_MetalView view)
-{
-    if (_this && view && _this->Metal_DestroyView) {
-        _this->Metal_DestroyView(_this, view);
-    }
-}
-
-void *SDL_Metal_GetLayer(SDL_MetalView view)
-{
-    if (_this && _this->Metal_GetLayer) {
-        CHECK_PARAM(!view) {
-            SDL_InvalidParamError("view");
-            return NULL;
-        }
-        return _this->Metal_GetLayer(_this, view);
-    } else {
-        SDL_SetError("Metal is not supported.");
-        return NULL;
-    }
 }
 
 #if defined(SDL_VIDEO_DRIVER_X11) || defined(SDL_VIDEO_DRIVER_WAYLAND) || defined(SDL_VIDEO_DRIVER_EMSCRIPTEN)

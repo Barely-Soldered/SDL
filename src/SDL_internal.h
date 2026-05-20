@@ -62,18 +62,6 @@
 
 #include "SDL_build_config.h"
 
-#include "dynapi/SDL_dynapi.h"
-
-#if SDL_DYNAMIC_API
-#include "dynapi/SDL_dynapi_overrides.h"
-/* force SDL_DECLSPEC off...it's all internal symbols now.
-   These will have actual #defines during SDL_dynapi.c only */
-#ifdef SDL_DECLSPEC
-#undef SDL_DECLSPEC
-#endif
-#define SDL_DECLSPEC
-#endif
-
 #ifdef SDL_PLATFORM_APPLE
 #ifndef _DARWIN_C_SOURCE
 #define _DARWIN_C_SOURCE 1 // for memset_pattern4()

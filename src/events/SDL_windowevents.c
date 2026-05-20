@@ -25,7 +25,6 @@
 #include "SDL_events_c.h"
 #include "SDL_eventwatch_c.h"
 #include "SDL_mouse_c.h"
-#include "../tray/SDL_tray_utils.h"
 
 
 #define NUM_WINDOW_EVENT_WATCH_PRIORITIES (SDL_WINDOW_EVENT_WATCH_NORMAL + 1)
@@ -304,7 +303,7 @@ bool SDL_SendWindowEvent(SDL_Window *window, SDL_EventType windowevent, int data
         }
     }
 
-    if (windowevent == SDL_EVENT_WINDOW_CLOSE_REQUESTED && window_is_topmost && !SDL_HasActiveTrays()) {
+    if (windowevent == SDL_EVENT_WINDOW_CLOSE_REQUESTED && window_is_topmost) {
         int count = window ? 0 : 1;
         for (SDL_Window *n = _this->windows; n; n = n->next) {
             if (!n->parent && !(n->flags & SDL_WINDOW_HIDDEN)) {

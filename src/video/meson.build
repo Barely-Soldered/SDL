@@ -1,0 +1,106 @@
+sdl_sources += files(
+  'SDL_RLEaccel.c',
+  'SDL_blit.c',
+  'SDL_blit_0.c',
+  'SDL_blit_1.c',
+  'SDL_blit_A.c',
+  'SDL_blit_N.c',
+  'SDL_blit_auto.c',
+  'SDL_blit_copy.c',
+  'SDL_blit_slow.c',
+  'SDL_bmp.c',
+  'SDL_clipboard.c',
+  'SDL_egl.c',
+  'SDL_fillrect.c',
+  'SDL_pixels.c',
+  'SDL_rect.c',
+  'SDL_rotate.c',
+  'SDL_stb.c',
+  'SDL_stretch.c',
+  'SDL_surface.c',
+  'SDL_video.c',
+  'SDL_video_unsupported.c',
+  'SDL_vulkan_utils.c',
+  'SDL_yuv.c',
+  'dummy/SDL_nullevents.c',
+  'dummy/SDL_nullframebuffer.c',
+  'dummy/SDL_nullvideo.c',
+  # yuv2rgb: portable std implementation + SSE2 variant. The SSE path is gated
+  # at the #ifdef level inside the .c file so it's safe to compile everywhere;
+  # the LoongArch (lsx) variant is omitted.
+  'yuv2rgb/yuv_rgb_std.c',
+  'yuv2rgb/yuv_rgb_sse.c',
+)
+
+if host_system == 'windows'
+  sdl_sources += files(
+    'windows/SDL_windowsclipboard.c',
+    'windows/SDL_windowsevents.c',
+    'windows/SDL_windowsframebuffer.c',
+    'windows/SDL_windowsgameinput.cpp',
+    'windows/SDL_windowskeyboard.c',
+    'windows/SDL_windowsmessagebox.c',
+    'windows/SDL_windowsmodes.c',
+    'windows/SDL_windowsmouse.c',
+    'windows/SDL_windowsopengl.c',
+    'windows/SDL_windowsopengles.c',
+    'windows/SDL_windowsrawinput.c',
+    'windows/SDL_windowsshape.c',
+    'windows/SDL_windowsvideo.c',
+    'windows/SDL_windowsvulkan.c',
+    'windows/SDL_windowswindow.c',
+  )
+elif host_system == 'linux'
+  sdl_sources += files(
+    'x11/SDL_x11clipboard.c',
+    'x11/SDL_x11dyn.c',
+    'x11/SDL_x11events.c',
+    'x11/SDL_x11framebuffer.c',
+    'x11/SDL_x11keyboard.c',
+    'x11/SDL_x11messagebox.c',
+    'x11/SDL_x11modes.c',
+    'x11/SDL_x11mouse.c',
+    'x11/SDL_x11opengl.c',
+    'x11/SDL_x11opengles.c',
+    'x11/SDL_x11pen.c',
+    'x11/SDL_x11settings.c',
+    'x11/SDL_x11shape.c',
+    'x11/SDL_x11toolkit.c',
+    'x11/SDL_x11touch.c',
+    'x11/SDL_x11video.c',
+    'x11/SDL_x11vulkan.c',
+    'x11/SDL_x11window.c',
+    'x11/SDL_x11xfixes.c',
+    'x11/SDL_x11xinput2.c',
+    'x11/SDL_x11xsync.c',
+    'x11/SDL_x11xtest.c',
+    'x11/edid-parse.c',
+    'x11/xsettings-client.c',
+    'wayland/SDL_waylandclipboard.c',
+    'wayland/SDL_waylandcolor.c',
+    'wayland/SDL_waylanddatamanager.c',
+    'wayland/SDL_waylanddyn.c',
+    'wayland/SDL_waylandevents.c',
+    'wayland/SDL_waylandkeyboard.c',
+    'wayland/SDL_waylandmessagebox.c',
+    'wayland/SDL_waylandmouse.c',
+    'wayland/SDL_waylandopengles.c',
+    'wayland/SDL_waylandshmbuffer.c',
+    'wayland/SDL_waylandutil.c',
+    'wayland/SDL_waylandvideo.c',
+    'wayland/SDL_waylandvulkan.c',
+    'wayland/SDL_waylandwindow.c',
+  )
+  # Wayland-scanner-generated protocol C files (and corresponding header
+  # targets so meson sequences the codegen before any wayland .c compiles).
+  sdl_sources += wayland_generated_sources
+  sdl_sources += wayland_generated_headers
+elif host_system == 'emscripten'
+  sdl_sources += files(
+    'emscripten/SDL_emscriptenevents.c',
+    'emscripten/SDL_emscriptenframebuffer.c',
+    'emscripten/SDL_emscriptenmouse.c',
+    'emscripten/SDL_emscriptenopengles.c',
+    'emscripten/SDL_emscriptenvideo.c',
+  )
+endif

@@ -24,9 +24,6 @@
 #ifdef SDL_memmove
 #undef SDL_memmove
 #endif
-#if SDL_DYNAMIC_API
-#define SDL_memmove SDL_memmove_REAL
-#endif
 void *SDL_memmove(SDL_OUT_BYTECAP(len) void *dst, SDL_IN_BYTECAP(len) const void *src, size_t len)
 {
 #if defined(__GNUC__) && (defined(HAVE_LIBC) && HAVE_LIBC)
