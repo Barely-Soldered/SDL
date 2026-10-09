@@ -2650,6 +2650,19 @@ void WIN_PumpEvents(SDL_VideoDevice *_this)
         SDL_processing_messages = false;
     }
 
+    if (_this && !SDL_GetKeyboardFocus()) {
+        HWND foreground = GetForegroundWindow();
+        SDL_Window *window = _this->windows;
+        while (window) {
+            SDL_WindowData *data = window->internal;
+            if (data && data->hwnd == foreground && !(window->flags & SDL_WINDOW_NOT_FOCUSABLE)) {
+                WIN_UpdateFocus(window, true, GetMessagePos());
+                break;
+            }
+            window = window->next;
+        }
+    }
+
 #if !defined(SDL_PLATFORM_XBOXONE) && !defined(SDL_PLATFORM_XBOXSERIES)
     /* Windows loses a shift KEYUP event when you have both pressed at once and let go of one.
        You won't get a KEYUP until both are released, and that keyup will only be for the second
